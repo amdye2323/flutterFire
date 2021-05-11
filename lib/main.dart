@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:testflutter/result_screen.dart';
+import 'package:testflutter/add_screen.dart';
+
+import 'MyHomePage.dart';
+
+
 
 // void main () => runApp(MyApp1()); //처음 메일 시작시 MyApp 위젯을 실행한다고 선언
 
@@ -57,71 +63,92 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //   }
 // }
 
+// 파이어베이스 첫번째
+// void main() => runApp(MyApp());
+//
+// class MyApp extends StatefulWidget {
+//   @override
+//   _MyAppState createState() => _MyAppState();
+// }
+// class _MyAppState extends State<MyApp> {
+//
+//   Firestore firestore = Firestore.instance;
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text("hello world"),
+//         ),
+//         body: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           crossAxisAlignment: CrossAxisAlignment.stretch,
+//           children: <Widget>[
+//             FlatButton(
+//               color: Colors.blue,
+//               child: Text("create button",style: TextStyle(color : Colors.white)),
+//               onPressed: (){
+//                 //클릭시 데이터를 추가해준다.
+//                 String book = "천년의_질문";
+//                 firestore.collection('books').document(book)
+//                     .setData({ 'page': 433, 'purchase?': false, 'title':'천년의_질문'});
+//               },
+//             ),
+//             FlatButton(
+//               color: Colors.blue,
+//               child: Text("read button", style: TextStyle(color : Colors.white)),
+//               onPressed: (){
+//                 //클릭시 데이터를 읽어준다
+//                 String title = "";
+//                 firestore.collection("books").document("on_intelligence").get()
+//                 .then((DocumentSnapshot ds){
+//                   title = ds.data["title"];
+//                   print(title);
+//                 });
+//               },
+//             ),
+//             FlatButton(
+//               color: Colors.blue,
+//               child: Text("update button", style: TextStyle(color : Colors.white)),
+//               onPressed: (){
+//                 //클릭시 데이터를 갱신해준다.
+//                 firestore.collection("books").document("chemistry_between_us").updateData({"page":543});
+//               },
+//             ),
+//             FlatButton(
+//               color: Colors.blue,
+//               child: Text("delete button", style: TextStyle(color : Colors.white)),
+//               onPressed: (){
+//                 //클릭시 데이터를 삭제해 준다.
+//                 //특정 document 삭제
+//                 firestore.collection("books").document("천년의_질문").delete();
+//                 //특정 document field 하나를 삭제
+//                 firestore.collection("books").document("chemistry_between_us").updateData({"page":FieldValue.delete()});
+//               },
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
 
-  Firestore firestore = Firestore.instance;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("hello world"),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            FlatButton(
-              color: Colors.blue,
-              child: Text("create button",style: TextStyle(color : Colors.white)),
-              onPressed: (){
-                //클릭시 데이터를 추가해준다.
-                String book = "천년의_질문";
-                firestore.collection('books').document(book)
-                    .setData({ 'page': 433, 'purchase?': false, 'title':'천년의_질문'});
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              child: Text("read button", style: TextStyle(color : Colors.white)),
-              onPressed: (){
-                //클릭시 데이터를 읽어준다
-                String title = "";
-                firestore.collection("books").document("on_intelligence").get()
-                .then((DocumentSnapshot ds){
-                  title = ds.data["title"];
-                  print(title);
-                });
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              child: Text("update button", style: TextStyle(color : Colors.white)),
-              onPressed: (){
-                //클릭시 데이터를 갱신해준다.
-                firestore.collection("books").document("chemistry_between_us").updateData({"page":543});
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              child: Text("delete button", style: TextStyle(color : Colors.white)),
-              onPressed: (){
-                //클릭시 데이터를 삭제해 준다.
-                //특정 document 삭제
-                firestore.collection("books").document("천년의_질문").delete();
-                //특정 document field 하나를 삭제
-                firestore.collection("books").document("chemistry_between_us").updateData({"page":FieldValue.delete()});
-              },
-            ),
-          ],
-        ),
-      ),
+      initialRoute: 'd',
+      routes: {
+        '/' : (context) => ResultScreen("all"),
+        'a' : (context) => ResultScreen("purchase"),
+        'b' : (context) => ResultScreen("price"),
+        'c' : (context) => AddScreen(),
+        'd' : (context) => MyHome(),
+      },
     );
   }
 }
